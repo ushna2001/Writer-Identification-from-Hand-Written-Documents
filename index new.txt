@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepWriter</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">DeepWriter</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#identification">Identification</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="home">
+        <div class="content">
+            <h1>DeepWriter</h1>
+            <p>Scan A Handwritten Document and Find out its Writer in an Instant.</p>
+            <div class="illustration">
+                <img src="/static/img/undraw_terms_re_6ak4.svg" alt="Illustration" width="300">
+            </div>
+            <button onclick="scrollToIdentification()">Get Started</button>
+        </div>
+    </section>
+
+    <section id="identification">
+        <div class="content">
+            <div class="box">
+                <div class="preview" id="imagePreview">Image Preview</div>
+                <form action="/upload_image" method="post" enctype="multipart/form-data">
+                    <input type="file" id="uploadImage" name="file" accept="image/*" onchange="previewImage(event)">
+                    <button type="submit">Upload Image</button>
+                </form>
+            </div>
+            <div class="box">
+                <div class="results">
+                    <p>Predicted Writer: Farah Hussain</p>
+                    <p>Total Number Of Writers: 20</p>
+                </div>
+                <form action="/identify_writer" method="post">
+                    <button type="submit">Identify Writer</button>
+                </form>
+                <form action="/save_results">
+                    <button type="submit">Save Results</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="content">
+            <h1>DeepWriter</h1>
+            <p>DeepWriter Is A Writer Recognition System That Allows You To Identify The Writer Of A Given Handwritten
+                Document. It Is Based On The Vision Transformer Architecture And Predicts Correctly With An Accuracy Of
+                About 97%.</p>
+        </div>
+    </section>
+
+    <script>
+        function scrollToIdentification() {
+            document.getElementById('identification').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('nav ul li a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        function previewImage(event) {
+            const preview = document.getElementById('imagePreview');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                preview.style.backgroundImage = `url(${reader.result})`;
+                preview.style.backgroundSize = 'cover';
+                preview.style.backgroundPosition = 'center';
+                preview.textContent = '';
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+
+</html>

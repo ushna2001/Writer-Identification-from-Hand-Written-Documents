@@ -1,0 +1,81 @@
+from flask import render_template, Flask, redirect, request
+from transformers import ViTForImageClassification, AutoImageProcessor
+import torch
+from PIL import Image
+import torchvision.transforms as transforms
+
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+app = Flask(__name__)
+
+model_path = './static/models/v1/'  # Update with the path to your saved model
+model = ViTForImageClassification.from_pretrained(model_path).to(device)
+
+UPLOAD_FOLDER = './static/uploaded_images'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+last_uploaded_file_path = None
+
+# @app.route('/save_image', methods=['GET', 'POST'])
+# def save_image():
+#     return 
+
+@app.route('/upload_image', methods=['POST'])
+def upload_image():
+    if 'file' not in request.files:
+        return 'No file part'
+    file = request.files['file']
+    if file.filename == '':
+        return 'No selected file'
+    if file:
+        filename = file.filename
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
+        
+        # Store the path of the uploaded file
+        last_uploaded_file_path = filepath
+        return f'File uploaded successfully to {filepath}. You can now click on "Identify Writer".'
+
+    return 'File upload failed'
+
+
+@app.route('/identify_writer', methods=['POST'])
+def identify_writer():
+    global last_uploaded_file_path
+
+    if last_uploaded_file_path:
+        prediction = predict(last_uploaded_file_path)
+        return f'Prediction: {predict}'
+    else:
+        return 'No image uploaded yet. Please upload an image first.'
+
+def predict(image):
+    image = Image.open(image_path)
+
+    # Preprocess the image
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=image_processor.image_mean, std=image_processor.image_std)
+    ])
+    input_image = transform(image)
+
+    # Perform inference
+    with torch.no_grad():
+        inputs = input_image.unsqueeze(0).to(device) # Add batch dimension
+        outputs = model(inputs)
+        
+    predicted_class_idx = torch.argmax(outputs.logits).item()
+    predicted_label = id2label[predicted_class_idx]
+    return predicted_label
+
+
+
+@app.route('/home', methods=['GET','POST'])
+def home():
+    return render_template('index.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
