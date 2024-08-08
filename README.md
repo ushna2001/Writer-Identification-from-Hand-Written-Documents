@@ -1,24 +1,8 @@
 # Writer-Identification-from-Hand-Written-Documents
-This project shows how to make a complete end-to-end writer recognition system for 
-handwritten Urdu documents. It contains a built-in easy to use interface, as well as 
-powerful & state-of-the-art Vision Transformer (ViT) model and preprocessing 
-techniques. It will help in identification to same handwriting across various agencies 
-and would glory the language preservation. It is an orderly multi-step process that 
-starts with developing a comprehensive dataset, reflecting as much diversity in 
-demographics and professions from the source privacy table. Data preprocessing. 
-Wide cleaning/processing to make the data ready for model development. To cater 
-this issue into account, state of the art deep learning techniques is used including 
-Vision Transformer architecture to learn better complex patterns and correlations 
-within handwritten Urdu documents. The project achieved a significant improvement 
-in model accuracy, both train and test accuracies. All owe to wider size of the dataset 
-and numerous methods for preparation that you choose. Using experimental results, it 
-has been shown that the approach is highly effective with an accuracy of 96.89 % 
-which stands out from all techniques present in literature. In the end, a competent 
-deployment of an Urdu writer recognition model capable of handwriting on 
-production system is achieved. This has led to ongoing efforts in the past several 
-years regarding reliability: document analysis, which will be beneficial for numerous 
-industries as described earlier. In future research, the dataset can be enlarged and 
-provided with more context information to better investigate real-time possibilities of 
-applications as well in another specific field for industry deployment. On the other 
-hand, continuous growth in Urdu writer recognition systems is going to play a leading
-role for deployment of these systems into a new era.
+This project is focused on building a complete system for recognizing writers based on handwritten Urdu documents. It features a user-friendly interface and utilizes a powerful Vision Transformer (ViT) model along with advanced preprocessing techniques. The system is designed to help identify consistent handwriting across different agencies, which plays a crucial role in preserving the Urdu language.
+
+The development process begins with the creation of a diverse dataset that captures a wide range of demographics and professions from 20 different writers, with each writer providing 20 handwritten samples. This dataset was meticulously preprocessed to ensure optimal model performance. Preprocessing steps included segmentation, filtering, white pixel padding, patch scanning, and data cleaning, all of which prepared the data for robust model development.
+
+o address the challenge of writer recognition, the Vision Transformer model is employed, which excels at recognizing complex patterns in handwritten Urdu documents. The project achieved significant improvements in model accuracy, with training and testing accuracies reaching 96.89%, outperforming existing techniques in the literature. This success is attributed to the extensive dataset and the meticulous preparation methods chosen.
+
+The final outcome is a successfully deployed Urdu writer recognition model capable of being used in real-world systems. This model offers significant benefits for industries by improving the reliability of document analysis.
